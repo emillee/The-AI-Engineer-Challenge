@@ -102,9 +102,26 @@ export default function Home() {
 
     } catch (error) {
       console.error('Error:', error)
+      let errorContent = 'Sorry, there was an error processing your request. Please check your API key and try again.'
+      
+      // Provide more specific error messages
+      if (error instanceof Error) {
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+          errorContent = '❌ Invalid API key. Please check your OpenAI API key and try again.'
+        } else if (error.message.includes('429') || error.message.includes('Rate limit')) {
+          errorContent = '⚠️ Rate limit exceeded. Please wait a moment and try again.'
+        } else if (error.message.includes('500') || error.message.includes('Internal server error')) {
+          errorContent = '🔧 Server error. Please check if the backend is running on localhost:8000'
+        } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          errorContent = '🌐 Network error. Please check if the backend is running on localhost:8000'
+        } else {
+          errorContent = `❌ Error: ${error.message}`
+        }
+      }
+      
       const errorMessage: Message = {
         role: 'assistant',
-        content: 'Sorry, there was an error processing your request. Please check your API key and try again.',
+        content: errorContent,
         timestamp: new Date()
       }
       setMessages(prev => [...prev, errorMessage])
