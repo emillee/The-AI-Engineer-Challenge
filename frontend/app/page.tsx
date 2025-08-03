@@ -140,7 +140,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-dark-900 mb-2">
-            AI Engineer Challenge
+            AI Engineer Challenge.
           </h1>
           <p className="text-dark-600 text-lg">
             Chat with GPT models powered by OpenAI
