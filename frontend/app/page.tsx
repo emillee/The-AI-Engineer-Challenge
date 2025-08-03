@@ -30,8 +30,14 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!userMessage.trim() || !apiKey.trim()) {
-      alert('Please enter both a message and your OpenAI API key')
+    if (!userMessage.trim()) {
+      alert('Please enter a message')
+      return
+    }
+    
+    if (!apiKey.trim()) {
+      alert('Please enter your OpenAI API key in the settings (click the ⚙️ icon)')
+      setShowSettings(true)
       return
     }
 
@@ -284,6 +290,7 @@ export default function Home() {
                 type="submit"
                 disabled={isLoading || !userMessage.trim()}
                 className="btn-primary"
+                title={!userMessage.trim() ? "Type a message to enable send" : "Send message"}
               >
                 <Send className="w-4 h-4" />
                 Send
